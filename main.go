@@ -5,12 +5,13 @@ import (
 	"os"
 )
 
-var manazl = []string{"", "ألف", "مليون", "مليار", "تريليون", "كوادريليون"}
+var manazl = []string{" ", "ألف", "مليون", "مليار", "تريليون", "كوادريليون"}
+var manazlInPlural = []string{" ", "آلاف", "ملايين", "مليارات", "تريليونات", "كوادريليونات"}
 var numbers = []string{"صفر", "واحد", "اثنان", "ثلاث", "أربع", "خمس", "ست", "سبع", "ثمان", "تسع", "عشر"}
 
 func MakeTens(index int) string {
 	if index == 0 {
-		return ""
+		return " "
 	}
 	if index == 1 {
 		return "عشرة"
@@ -23,7 +24,7 @@ func MakeTens(index int) string {
 }
 func MakeOneDigitNum(num int) string {
 	if num == 0 {
-		return ""
+		return " "
 	}
 	number := numbers[num]
 	return number
@@ -31,6 +32,15 @@ func MakeOneDigitNum(num int) string {
 func MakeTwoDigitNum(num int) string {
 	if num%10 == 0 {
 		return MakeTens(num / 10)
+	}
+	if num/10 == 1 {
+		if num%10 == 1 {
+			return "احدى عشر"
+		}
+		if num%10 == 2 {
+			return "اثنا عشر"
+		}
+		return numbers[num%10] + string(" ") + "عشر"
 	}
 	return numbers[num%10] + string(" ") + string("و") + MakeTens(num/10)
 }
@@ -93,7 +103,18 @@ func ReturnBase(num int) string {
 	}
 	return ""
 }
+func searchInNumbers(num string) bool {
+	for i := 1; i <= 10; i++ {
+		if num == numbers[i] {
+			return true
+		}
+	}
+	return false
+}
 func MakeNumber(num int) string {
+	if num == 0 {
+		return numbers[0]
+	}
 	var numberStr []string
 	for {
 		if CountDigits(num) >= 3 {
@@ -111,13 +132,27 @@ func MakeNumber(num int) string {
 	}
 	var final string
 	for i := 0; i < len(numberStr); i++ {
-		if numberStr[i] != "" && manazl[i] != "" {
-			numberStr[i] += string(" ")
-			numberStr[i] += manazl[i]
+		if numberStr[i] != " " && manazl[i] != " " {
+			if numberStr[i] == numbers[1] {
+				numberStr[i] = manazl[i]
+			} else if numberStr[i] == numbers[2] {
+				numberStr[i] = manazl[i] + "ان"
+			} else if searchInNumbers(numberStr[i]) {
+				numberStr[i] += string(" ")
+				numberStr[i] += manazlInPlural[i]
+			} else {
+				numberStr[i] += string(" ")
+				numberStr[i] += manazl[i]
+			}
 		}
-		// fmt.Println(numberStr[i])
 	}
 	for i := len(numberStr) - 1; i >= 0; i-- {
+		if numberStr[i] == " " {
+			continue
+		}
+		if i+1 < len(numberStr) && numberStr[i+1] != " " {
+			numberStr[i] = "و" + numberStr[i]
+		}
 		final += " "
 		final += numberStr[i]
 	}
@@ -144,7 +179,7 @@ func main() {
 		}
 
 		fmt.Println("Data written to file successfully.")
-		if index == 0 {
+		if index == 999 {
 			break
 		}
 	}
