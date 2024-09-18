@@ -161,12 +161,12 @@ func TestMakeThreeDigitNum(t *testing.T) {
 	require.Equal(t, "مئة وثلاثة وأربعون", cnv.MakeThreeDigitNum(143))
 	require.Equal(t, "مئة", cnv.MakeThreeDigitNum(100))
 	require.Equal(t, "مئتان", cnv.MakeThreeDigitNum(200))
-	require.Equal(t, "ثلاث مئة وأربعة", cnv.MakeThreeDigitNum(304))
-	require.Equal(t, "خمس مئة", cnv.MakeThreeDigitNum(500))
+	require.Equal(t, "ثلاثة مئة وأربعة", cnv.MakeThreeDigitNum(304))
+	require.Equal(t, "خمسة مئة", cnv.MakeThreeDigitNum(500))
 	require.Equal(t, "مئتان وستة وخمسون", cnv.MakeThreeDigitNum(256))
-	require.Equal(t, "ثمان مئة وخمسة وتسعون", cnv.MakeThreeDigitNum(895))
-	require.Equal(t, "ثمان مئة واثنا عشر", cnv.MakeThreeDigitNum(812))
-	require.Equal(t, "ثمان مئة وأحد عشر", cnv.MakeThreeDigitNum(811))
+	require.Equal(t, "ثمانية مئة وخمسة وتسعون", cnv.MakeThreeDigitNum(895))
+	require.Equal(t, "ثمانية مئة واثنا عشر", cnv.MakeThreeDigitNum(812))
+	require.Equal(t, "ثمانية مئة وأحد عشر", cnv.MakeThreeDigitNum(811))
 	cnv.Opt.Feminine = true
 	require.Equal(t, "مئة وثلاث وأربعون", cnv.MakeThreeDigitNum(143))
 	require.Equal(t, "مئة", cnv.MakeThreeDigitNum(100))
@@ -237,4 +237,12 @@ func TestMakeNumber(t *testing.T) {
 	require.Equal(t, "مليون وستة مئة وخمسون ألف ومئتان واثنا عشر", cnv.MakeNumber())
 	cnv.Num = 49800
 	require.Equal(t, "تسعة وأربعون ألف وثمانية مئة", cnv.MakeNumber())
+	cnv.Num = 0
+	require.Equal(t, "صفر", cnv.MakeNumber())
+	cnv.Num = 2000000
+	require.Equal(t, "مليونان", cnv.MakeNumber())
+	cnv.Opt.AG = true
+	cnv.Num = 2000000
+
+	require.Equal(t, "مليونين", cnv.MakeNumber())
 }

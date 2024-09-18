@@ -204,6 +204,9 @@ func (cnv *NumberConverter) MakeNumber() string {
 				numberStr[i] = manazl[i]
 			} else if numberStr[i] == "اثنان" || numberStr[i] == "اثنين" || numberStr[i] == "اثنتين" || numberStr[i] == "اثنتان" {
 				numberStr[i] = manazl[i] + "ان"
+				if cnv.Opt.AG {
+					numberStr[i] = manazl[i] + "ين"
+				}
 			} else if searchInNumbers(numberStr[i]) {
 				numberStr[i] += string(" ")
 				numberStr[i] += manazlInPlural[i]
