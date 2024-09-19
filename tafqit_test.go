@@ -8,11 +8,10 @@ import (
 
 func TestMakeTens(t *testing.T) {
 	opt := Options{
-		Feminine:  false,
-		AG:        false,
-		Miah:      false,
-		SplitHund: false,
-		Billions:  false,
+		Feminine: false,
+		AG:       false,
+		Miah:     false,
+		Billions: false,
 	}
 	cnv := NumberConverter{
 		Opt: opt,
@@ -60,11 +59,10 @@ func TestHandleFeminine(t *testing.T) {
 
 func TestMakeOneDigit(t *testing.T) {
 	opt := Options{
-		Feminine:  true,
-		AG:        false,
-		Miah:      false,
-		SplitHund: false,
-		Billions:  false,
+		Feminine: true,
+		AG:       false,
+		Miah:     false,
+		Billions: false,
 	}
 	cnv := NumberConverter{
 		Opt: opt,
@@ -95,11 +93,10 @@ func TestMakeOneDigit(t *testing.T) {
 
 func TestMakeTwoDigitNum(t *testing.T) {
 	opt := Options{
-		Feminine:  false,
-		AG:        false,
-		Miah:      false,
-		SplitHund: false,
-		Billions:  false,
+		Feminine: false,
+		AG:       false,
+		Miah:     false,
+		Billions: false,
 	}
 	cnv := NumberConverter{
 		Opt: opt,
@@ -148,11 +145,10 @@ func TestCountDigits(t *testing.T) {
 
 func TestMakeThreeDigitNum(t *testing.T) {
 	opt := Options{
-		Feminine:  false,
-		AG:        false,
-		Miah:      false,
-		SplitHund: false,
-		Billions:  false,
+		Feminine: false,
+		AG:       false,
+		Miah:     false,
+		Billions: false,
 	}
 	cnv := NumberConverter{
 		Opt: opt,
@@ -187,6 +183,16 @@ func TestMakeThreeDigitNum(t *testing.T) {
 	require.Equal(t, "ثمان مئة وخمس وتسعين", cnv.MakeThreeDigitNum(895))
 	require.Equal(t, "ثمان مئة واثنتي عشرة", cnv.MakeThreeDigitNum(812))
 	require.Equal(t, "ثمان مئة واحدى عشرة", cnv.MakeThreeDigitNum(811))
+	cnv.Opt.Miah = true
+	require.Equal(t, "مائة وثلاث وأربعين", cnv.MakeThreeDigitNum(143))
+	require.Equal(t, "مائة", cnv.MakeThreeDigitNum(100))
+	require.Equal(t, "مائتين", cnv.MakeThreeDigitNum(200))
+	require.Equal(t, "ثلاث مائة وأربع", cnv.MakeThreeDigitNum(304))
+	require.Equal(t, "خمس مائة", cnv.MakeThreeDigitNum(500))
+	require.Equal(t, "مائتين وست وخمسين", cnv.MakeThreeDigitNum(256))
+	require.Equal(t, "ثمان مائة وخمس وتسعين", cnv.MakeThreeDigitNum(895))
+	require.Equal(t, "ثمان مائة واثنتي عشرة", cnv.MakeThreeDigitNum(812))
+	require.Equal(t, "ثمان مائة واحدى عشرة", cnv.MakeThreeDigitNum(811))
 
 }
 
@@ -205,11 +211,10 @@ func TestSearchInNumbers(t *testing.T) {
 
 func TestReturnBase(t *testing.T) {
 	opt := Options{
-		Feminine:  false,
-		AG:        false,
-		Miah:      false,
-		SplitHund: false,
-		Billions:  false,
+		Feminine: false,
+		AG:       false,
+		Miah:     false,
+		Billions: false,
 	}
 	cnv := NumberConverter{
 		Opt: opt,
@@ -224,11 +229,10 @@ func TestReturnBase(t *testing.T) {
 
 func TestMakeNumber(t *testing.T) {
 	opt := Options{
-		Feminine:  false,
-		AG:        false,
-		Miah:      false,
-		SplitHund: false,
-		Billions:  false,
+		Feminine: false,
+		AG:       false,
+		Miah:     false,
+		Billions: false,
 	}
 	cnv := NumberConverter{
 		Opt: opt,
@@ -249,5 +253,17 @@ func TestMakeNumber(t *testing.T) {
 	require.Equal(t, "أربعة بليونات وتسعة مئة وثمانية وسبعين مليون وستة مئة وأربعة وخمسين ألف ومئة وعشرين", cnv.MakeNumber())
 	cnv.Num = 2978654120
 	require.Equal(t, "بليونين وتسعة مئة وثمانية وسبعين مليون وستة مئة وأربعة وخمسين ألف ومئة وعشرين", cnv.MakeNumber())
+
+}
+
+func TestHandleTwoHandred(t *testing.T) {
+	require.Equal(t, "مائتين", handleTwoHaundred(true, true))
+	require.Equal(t, "مئتين", handleTwoHaundred(true, false))
+	require.Equal(t, "مائتان", handleTwoHaundred(false, true))
+	require.Equal(t, "مئتان", handleTwoHaundred(false, false))
+}
+func TestHandleMiah(t *testing.T) {
+	require.Equal(t, "مئة", handleMiah(false))
+	require.Equal(t, "مائة", handleMiah(true))
 
 }

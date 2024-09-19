@@ -10,11 +10,10 @@ var numbers = [][]string{
 }
 
 type Options struct {
-	Feminine  bool
-	Miah      bool
-	SplitHund bool
-	Billions  bool
-	AG        bool
+	Feminine bool
+	Miah     bool
+	Billions bool
+	AG       bool
 }
 
 type NumberConverter struct {
@@ -22,6 +21,14 @@ type NumberConverter struct {
 	Opt Options
 }
 
+func handleMiah(Miah bool) string {
+	if Miah {
+		return "مائة"
+
+	}
+	return "مئة"
+
+}
 func handleAG(index int, AG bool) string {
 	if AG {
 		return numbers[0][index] + "ين"
@@ -104,18 +111,31 @@ func (cnv *NumberConverter) MakeTwoDigitNum(num int) string {
 	}
 	return handleFeminine(num%10, cnv.Opt.Feminine, cnv.Opt.AG) + string(" ") + string("و") + cnv.MakeTens(num/10)
 }
-
+func handleTwoHaundred(AG, Miah bool) string {
+	if AG {
+		if Miah {
+			return "مائتين"
+		}
+		return "مئتين"
+	}
+	if Miah {
+		return "مائتان"
+	}
+	return "مئتان"
+}
 func (cnv *NumberConverter) MakeThreeDigitNum(num int) string {
 	var hundred string
 	if num/100 == 1 {
-		hundred = "مئة"
+		hundred = handleMiah(cnv.Opt.Miah)
+		// hundred = "مئة"
 	} else if num/100 == 2 {
-		hundred = "مئتان"
-		if cnv.Opt.AG {
-			hundred = "مئتين"
-		}
+		// hundred = "مئتان"
+		// if cnv.Opt.AG {
+		// 	hundred = "مئتين"
+		// }
+		hundred = handleTwoHaundred(cnv.Opt.AG, cnv.Opt.Miah)
 	} else {
-		hundred = handleFeminine(num/100, cnv.Opt.Feminine, cnv.Opt.AG) + string(" ") + string("مئة")
+		hundred = handleFeminine(num/100, cnv.Opt.Feminine, cnv.Opt.AG) + string(" ") + handleMiah(cnv.Opt.Miah)
 	}
 	if countsDigits(num%100) == 2 {
 		return hundred + string(" ") + string("و") + cnv.MakeTwoDigitNum(num%100)
@@ -242,29 +262,4 @@ func (cnv *NumberConverter) MakeNumber() string {
 }
 
 func main() {
-	// var index int
-	// var cnv NumberConverter
-	// file, err := os.Create("output.txt")
-	// if err != nil {
-	// 	fmt.Println("Error creating file:", err)
-	// 	return
-	// }
-	// defer file.Close() // Ensure the file is closed at the end
-
-	// // Write a string to the file
-	// for {
-	// 	fmt.Scan(&index)
-
-	// 	_, err = file.WriteString(cnv.MakeNumber(index) + "\n")
-	// 	if err != nil {
-	// 		fmt.Println("Error writing to file:", cnv.MakeNumber(index))
-	// 		return
-	// 	}
-
-	// 	fmt.Println("Data written to file successfully.")
-	// 	if index == 999 {
-	// 		break
-	// 	}
-	// }
-
 }
