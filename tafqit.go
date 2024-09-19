@@ -1,6 +1,8 @@
 package tafqit
 
-import "strings"
+import (
+	"strings"
+)
 
 var manazl = []string{" ", "ألف", "مليون", "مليار", "تريليون", "كوادريليون"}
 var manazlInPlural = []string{" ", "آلاف", "ملايين", "مليارات", "تريليونات", "كوادريليونات"}
@@ -60,7 +62,7 @@ func handleFeminine(index int, feminine bool, AG bool) string {
 	}
 	return numbers[1][index]
 }
-func (cnv *NumberConverter) MakeTens(index int) string {
+func (cnv *NumberConverter) makeTens(index int) string {
 	if index == 0 {
 		return " "
 	}
@@ -73,15 +75,15 @@ func (cnv *NumberConverter) MakeTens(index int) string {
 	}
 	return handleAG(index, cnv.Opt.AG)
 }
-func (cnv *NumberConverter) MakeOneDigitNum(num int) string {
+func (cnv *NumberConverter) makeOneDigitNum(num int) string {
 	if num == 0 {
 		return " "
 	}
 	return handleFeminine(num, cnv.Opt.Feminine, cnv.Opt.AG)
 }
-func (cnv *NumberConverter) MakeTwoDigitNum(num int) string {
+func (cnv *NumberConverter) makeTwoDigitNum(num int) string {
 	if num%10 == 0 {
-		return cnv.MakeTens(num / 10)
+		return cnv.makeTens(num / 10)
 	}
 	if num/10 == 1 {
 		if num%10 == 1 {
@@ -109,7 +111,7 @@ func (cnv *NumberConverter) MakeTwoDigitNum(num int) string {
 		}
 		return handleFeminine(num%10, cnv.Opt.Feminine, cnv.Opt.AG) + string(" ") + ten
 	}
-	return handleFeminine(num%10, cnv.Opt.Feminine, cnv.Opt.AG) + string(" ") + string("و") + cnv.MakeTens(num/10)
+	return handleFeminine(num%10, cnv.Opt.Feminine, cnv.Opt.AG) + string(" ") + string("و") + cnv.makeTens(num/10)
 }
 func handleTwoHaundred(AG, Miah bool) string {
 	if AG {
@@ -123,7 +125,7 @@ func handleTwoHaundred(AG, Miah bool) string {
 	}
 	return "مئتان"
 }
-func (cnv *NumberConverter) MakeThreeDigitNum(num int) string {
+func (cnv *NumberConverter) makeThreeDigitNum(num int) string {
 	var hundred string
 	if num/100 == 1 {
 		hundred = handleMiah(cnv.Opt.Miah)
@@ -138,9 +140,9 @@ func (cnv *NumberConverter) MakeThreeDigitNum(num int) string {
 		hundred = handleFeminine(num/100, cnv.Opt.Feminine, cnv.Opt.AG) + string(" ") + handleMiah(cnv.Opt.Miah)
 	}
 	if countsDigits(num%100) == 2 {
-		return hundred + string(" ") + string("و") + cnv.MakeTwoDigitNum(num%100)
+		return hundred + string(" ") + string("و") + cnv.makeTwoDigitNum(num%100)
 	} else if countsDigits(num%100) == 1 && num%100 != 0 {
-		return hundred + string(" ") + string("و") + cnv.MakeOneDigitNum(num%100)
+		return hundred + string(" ") + string("و") + cnv.makeOneDigitNum(num%100)
 	} else {
 		return hundred
 	}
@@ -175,16 +177,16 @@ func extractLastNDigit(num, n int) int {
 	return ans
 }
 
-func (cnv *NumberConverter) ReturnBase(num int) string {
+func (cnv *NumberConverter) returnBase(num int) string {
 	digits := countsDigits(num)
 	if digits == 1 {
-		return cnv.MakeOneDigitNum(num)
+		return cnv.makeOneDigitNum(num)
 	}
 	if digits == 2 {
-		return cnv.MakeTwoDigitNum(num)
+		return cnv.makeTwoDigitNum(num)
 	}
 	if digits == 3 {
-		return cnv.MakeThreeDigitNum(num)
+		return cnv.makeThreeDigitNum(num)
 	}
 	return " "
 }
@@ -207,11 +209,11 @@ func (cnv *NumberConverter) MakeNumber() string {
 	for {
 		if countsDigits(cnv.Num) >= 3 {
 			lastThreeDigitNumber := extractLastNDigit(cnv.Num, 3)
-			numberStr = append(numberStr, cnv.ReturnBase(lastThreeDigitNumber))
+			numberStr = append(numberStr, cnv.returnBase(lastThreeDigitNumber))
 			cnv.Num /= 1000
 		} else if digits := countsDigits(cnv.Num); digits < 3 && digits != 0 {
 			lastNDigitNumber := extractLastNDigit(cnv.Num, digits)
-			numberStr = append(numberStr, cnv.ReturnBase(lastNDigitNumber))
+			numberStr = append(numberStr, cnv.returnBase(lastNDigitNumber))
 			cnv.Num = 0
 		}
 		if cnv.Num == 0 {
@@ -259,7 +261,4 @@ func (cnv *NumberConverter) MakeNumber() string {
 	}
 
 	return strings.TrimSpace(final)
-}
-
-func main() {
 }

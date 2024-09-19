@@ -17,20 +17,20 @@ func TestMakeTens(t *testing.T) {
 		Opt: opt,
 		Num: 1,
 	}
-	require.Equal(t, "ثلاثون", cnv.MakeTens(3))
-	require.Equal(t, "أربعون", cnv.MakeTens(4))
-	require.Equal(t, "عشرة", cnv.MakeTens(1))
-	require.Equal(t, "عشرون", cnv.MakeTens(2))
-	require.Equal(t, "تسعون", cnv.MakeTens(9))
-	require.Equal(t, " ", cnv.MakeTens(0))
-	require.Equal(t, "خمسون", cnv.MakeTens(5))
+	require.Equal(t, "ثلاثون", cnv.makeTens(3))
+	require.Equal(t, "أربعون", cnv.makeTens(4))
+	require.Equal(t, "عشرة", cnv.makeTens(1))
+	require.Equal(t, "عشرون", cnv.makeTens(2))
+	require.Equal(t, "تسعون", cnv.makeTens(9))
+	require.Equal(t, " ", cnv.makeTens(0))
+	require.Equal(t, "خمسون", cnv.makeTens(5))
 	cnv.Opt.AG = true
-	require.Equal(t, "ثلاثين", cnv.MakeTens(3))
-	require.Equal(t, "أربعين", cnv.MakeTens(4))
-	require.Equal(t, "عشرة", cnv.MakeTens(1))
-	require.Equal(t, "عشرين", cnv.MakeTens(2))
-	require.Equal(t, "تسعين", cnv.MakeTens(9))
-	require.Equal(t, "خمسين", cnv.MakeTens(5))
+	require.Equal(t, "ثلاثين", cnv.makeTens(3))
+	require.Equal(t, "أربعين", cnv.makeTens(4))
+	require.Equal(t, "عشرة", cnv.makeTens(1))
+	require.Equal(t, "عشرين", cnv.makeTens(2))
+	require.Equal(t, "تسعين", cnv.makeTens(9))
+	require.Equal(t, "خمسين", cnv.makeTens(5))
 }
 
 func TestHandleAG(t *testing.T) {
@@ -68,27 +68,27 @@ func TestMakeOneDigit(t *testing.T) {
 		Opt: opt,
 		Num: 1,
 	}
-	require.Equal(t, " ", cnv.MakeOneDigitNum(0))
-	require.Equal(t, "اثنتان", cnv.MakeOneDigitNum(2))
-	require.Equal(t, "واحدة", cnv.MakeOneDigitNum(1))
-	require.Equal(t, "ثلاث", cnv.MakeOneDigitNum(3))
-	require.Equal(t, "أربع", cnv.MakeOneDigitNum(4))
+	require.Equal(t, " ", cnv.makeOneDigitNum(0))
+	require.Equal(t, "اثنتان", cnv.makeOneDigitNum(2))
+	require.Equal(t, "واحدة", cnv.makeOneDigitNum(1))
+	require.Equal(t, "ثلاث", cnv.makeOneDigitNum(3))
+	require.Equal(t, "أربع", cnv.makeOneDigitNum(4))
 	cnv.Opt.Feminine = false
-	require.Equal(t, "ثلاثة", cnv.MakeOneDigitNum(3))
-	require.Equal(t, "أربعة", cnv.MakeOneDigitNum(4))
-	require.Equal(t, "اثنان", cnv.MakeOneDigitNum(2))
-	require.Equal(t, "واحد", cnv.MakeOneDigitNum(1))
+	require.Equal(t, "ثلاثة", cnv.makeOneDigitNum(3))
+	require.Equal(t, "أربعة", cnv.makeOneDigitNum(4))
+	require.Equal(t, "اثنان", cnv.makeOneDigitNum(2))
+	require.Equal(t, "واحد", cnv.makeOneDigitNum(1))
 
 	cnv.Opt.AG = true
-	require.Equal(t, "اثنين", cnv.MakeOneDigitNum(2))
-	require.Equal(t, "واحد", cnv.MakeOneDigitNum(1))
-	require.Equal(t, "ثلاثة", cnv.MakeOneDigitNum(3))
-	require.Equal(t, "أربعة", cnv.MakeOneDigitNum(4))
+	require.Equal(t, "اثنين", cnv.makeOneDigitNum(2))
+	require.Equal(t, "واحد", cnv.makeOneDigitNum(1))
+	require.Equal(t, "ثلاثة", cnv.makeOneDigitNum(3))
+	require.Equal(t, "أربعة", cnv.makeOneDigitNum(4))
 	cnv.Opt.Feminine = true
-	require.Equal(t, "اثنتين", cnv.MakeOneDigitNum(2))
-	require.Equal(t, "واحدة", cnv.MakeOneDigitNum(1))
-	require.Equal(t, "ثلاث", cnv.MakeOneDigitNum(3))
-	require.Equal(t, "أربع", cnv.MakeOneDigitNum(4))
+	require.Equal(t, "اثنتين", cnv.makeOneDigitNum(2))
+	require.Equal(t, "واحدة", cnv.makeOneDigitNum(1))
+	require.Equal(t, "ثلاث", cnv.makeOneDigitNum(3))
+	require.Equal(t, "أربع", cnv.makeOneDigitNum(4))
 }
 
 func TestMakeTwoDigitNum(t *testing.T) {
@@ -102,32 +102,32 @@ func TestMakeTwoDigitNum(t *testing.T) {
 		Opt: opt,
 		Num: 1,
 	}
-	require.Equal(t, "واحد وخمسون", cnv.MakeTwoDigitNum(51))
-	require.Equal(t, "اثنان وثلاثون", cnv.MakeTwoDigitNum(32))
-	require.Equal(t, "خمسة وسبعون", cnv.MakeTwoDigitNum(75))
-	require.Equal(t, "اثنا عشر", cnv.MakeTwoDigitNum(12))
-	require.Equal(t, "أحد عشر", cnv.MakeTwoDigitNum(11))
-	require.Equal(t, "خمسة عشر", cnv.MakeTwoDigitNum(15))
-	require.Equal(t, "تسعة عشر", cnv.MakeTwoDigitNum(19))
-	require.Equal(t, "ثمانية وثمانون", cnv.MakeTwoDigitNum(88))
-	require.Equal(t, "تسعة وأربعون", cnv.MakeTwoDigitNum(49))
+	require.Equal(t, "واحد وخمسون", cnv.makeTwoDigitNum(51))
+	require.Equal(t, "اثنان وثلاثون", cnv.makeTwoDigitNum(32))
+	require.Equal(t, "خمسة وسبعون", cnv.makeTwoDigitNum(75))
+	require.Equal(t, "اثنا عشر", cnv.makeTwoDigitNum(12))
+	require.Equal(t, "أحد عشر", cnv.makeTwoDigitNum(11))
+	require.Equal(t, "خمسة عشر", cnv.makeTwoDigitNum(15))
+	require.Equal(t, "تسعة عشر", cnv.makeTwoDigitNum(19))
+	require.Equal(t, "ثمانية وثمانون", cnv.makeTwoDigitNum(88))
+	require.Equal(t, "تسعة وأربعون", cnv.makeTwoDigitNum(49))
 	cnv.Opt.AG = true
-	require.Equal(t, "اثني عشر", cnv.MakeTwoDigitNum(12))
+	require.Equal(t, "اثني عشر", cnv.makeTwoDigitNum(12))
 	cnv.Opt.AG = false
 	cnv.Opt.Feminine = true
-	require.Equal(t, "اثنتا عشرة", cnv.MakeTwoDigitNum(12))
-	require.Equal(t, "احدى عشرة", cnv.MakeTwoDigitNum(11))
+	require.Equal(t, "اثنتا عشرة", cnv.makeTwoDigitNum(12))
+	require.Equal(t, "احدى عشرة", cnv.makeTwoDigitNum(11))
 	cnv.Opt.AG = true
 
-	require.Equal(t, "واحدة وخمسين", cnv.MakeTwoDigitNum(51))
-	require.Equal(t, "اثنتين وثلاثين", cnv.MakeTwoDigitNum(32))
-	require.Equal(t, "خمس وسبعين", cnv.MakeTwoDigitNum(75))
-	require.Equal(t, "اثنتي عشرة", cnv.MakeTwoDigitNum(12))
-	require.Equal(t, "احدى عشرة", cnv.MakeTwoDigitNum(11))
-	require.Equal(t, "خمس عشرة", cnv.MakeTwoDigitNum(15))
-	require.Equal(t, "تسع عشرة", cnv.MakeTwoDigitNum(19))
-	require.Equal(t, "ثمان وثمانين", cnv.MakeTwoDigitNum(88))
-	require.Equal(t, "تسع وأربعين", cnv.MakeTwoDigitNum(49))
+	require.Equal(t, "واحدة وخمسين", cnv.makeTwoDigitNum(51))
+	require.Equal(t, "اثنتين وثلاثين", cnv.makeTwoDigitNum(32))
+	require.Equal(t, "خمس وسبعين", cnv.makeTwoDigitNum(75))
+	require.Equal(t, "اثنتي عشرة", cnv.makeTwoDigitNum(12))
+	require.Equal(t, "احدى عشرة", cnv.makeTwoDigitNum(11))
+	require.Equal(t, "خمس عشرة", cnv.makeTwoDigitNum(15))
+	require.Equal(t, "تسع عشرة", cnv.makeTwoDigitNum(19))
+	require.Equal(t, "ثمان وثمانين", cnv.makeTwoDigitNum(88))
+	require.Equal(t, "تسع وأربعين", cnv.makeTwoDigitNum(49))
 }
 
 func TestCountDigits(t *testing.T) {
@@ -154,45 +154,45 @@ func TestMakeThreeDigitNum(t *testing.T) {
 		Opt: opt,
 		Num: 1,
 	}
-	require.Equal(t, "مئة وثلاثة وأربعون", cnv.MakeThreeDigitNum(143))
-	require.Equal(t, "مئة", cnv.MakeThreeDigitNum(100))
-	require.Equal(t, "مئتان", cnv.MakeThreeDigitNum(200))
-	require.Equal(t, "ثلاثة مئة وأربعة", cnv.MakeThreeDigitNum(304))
-	require.Equal(t, "خمسة مئة", cnv.MakeThreeDigitNum(500))
-	require.Equal(t, "مئتان وستة وخمسون", cnv.MakeThreeDigitNum(256))
-	require.Equal(t, "ثمانية مئة وخمسة وتسعون", cnv.MakeThreeDigitNum(895))
-	require.Equal(t, "ثمانية مئة واثنا عشر", cnv.MakeThreeDigitNum(812))
-	require.Equal(t, "ثمانية مئة وأحد عشر", cnv.MakeThreeDigitNum(811))
+	require.Equal(t, "مئة وثلاثة وأربعون", cnv.makeThreeDigitNum(143))
+	require.Equal(t, "مئة", cnv.makeThreeDigitNum(100))
+	require.Equal(t, "مئتان", cnv.makeThreeDigitNum(200))
+	require.Equal(t, "ثلاثة مئة وأربعة", cnv.makeThreeDigitNum(304))
+	require.Equal(t, "خمسة مئة", cnv.makeThreeDigitNum(500))
+	require.Equal(t, "مئتان وستة وخمسون", cnv.makeThreeDigitNum(256))
+	require.Equal(t, "ثمانية مئة وخمسة وتسعون", cnv.makeThreeDigitNum(895))
+	require.Equal(t, "ثمانية مئة واثنا عشر", cnv.makeThreeDigitNum(812))
+	require.Equal(t, "ثمانية مئة وأحد عشر", cnv.makeThreeDigitNum(811))
 	cnv.Opt.Feminine = true
-	require.Equal(t, "مئة وثلاث وأربعون", cnv.MakeThreeDigitNum(143))
-	require.Equal(t, "مئة", cnv.MakeThreeDigitNum(100))
-	require.Equal(t, "مئتان", cnv.MakeThreeDigitNum(200))
-	require.Equal(t, "ثلاث مئة وأربع", cnv.MakeThreeDigitNum(304))
-	require.Equal(t, "خمس مئة", cnv.MakeThreeDigitNum(500))
-	require.Equal(t, "مئتان وست وخمسون", cnv.MakeThreeDigitNum(256))
-	require.Equal(t, "ثمان مئة وخمس وتسعون", cnv.MakeThreeDigitNum(895))
-	require.Equal(t, "ثمان مئة واثنتا عشرة", cnv.MakeThreeDigitNum(812))
-	require.Equal(t, "ثمان مئة واحدى عشرة", cnv.MakeThreeDigitNum(811))
+	require.Equal(t, "مئة وثلاث وأربعون", cnv.makeThreeDigitNum(143))
+	require.Equal(t, "مئة", cnv.makeThreeDigitNum(100))
+	require.Equal(t, "مئتان", cnv.makeThreeDigitNum(200))
+	require.Equal(t, "ثلاث مئة وأربع", cnv.makeThreeDigitNum(304))
+	require.Equal(t, "خمس مئة", cnv.makeThreeDigitNum(500))
+	require.Equal(t, "مئتان وست وخمسون", cnv.makeThreeDigitNum(256))
+	require.Equal(t, "ثمان مئة وخمس وتسعون", cnv.makeThreeDigitNum(895))
+	require.Equal(t, "ثمان مئة واثنتا عشرة", cnv.makeThreeDigitNum(812))
+	require.Equal(t, "ثمان مئة واحدى عشرة", cnv.makeThreeDigitNum(811))
 	cnv.Opt.AG = true
-	require.Equal(t, "مئة وثلاث وأربعين", cnv.MakeThreeDigitNum(143))
-	require.Equal(t, "مئة", cnv.MakeThreeDigitNum(100))
-	require.Equal(t, "مئتين", cnv.MakeThreeDigitNum(200))
-	require.Equal(t, "ثلاث مئة وأربع", cnv.MakeThreeDigitNum(304))
-	require.Equal(t, "خمس مئة", cnv.MakeThreeDigitNum(500))
-	require.Equal(t, "مئتين وست وخمسين", cnv.MakeThreeDigitNum(256))
-	require.Equal(t, "ثمان مئة وخمس وتسعين", cnv.MakeThreeDigitNum(895))
-	require.Equal(t, "ثمان مئة واثنتي عشرة", cnv.MakeThreeDigitNum(812))
-	require.Equal(t, "ثمان مئة واحدى عشرة", cnv.MakeThreeDigitNum(811))
+	require.Equal(t, "مئة وثلاث وأربعين", cnv.makeThreeDigitNum(143))
+	require.Equal(t, "مئة", cnv.makeThreeDigitNum(100))
+	require.Equal(t, "مئتين", cnv.makeThreeDigitNum(200))
+	require.Equal(t, "ثلاث مئة وأربع", cnv.makeThreeDigitNum(304))
+	require.Equal(t, "خمس مئة", cnv.makeThreeDigitNum(500))
+	require.Equal(t, "مئتين وست وخمسين", cnv.makeThreeDigitNum(256))
+	require.Equal(t, "ثمان مئة وخمس وتسعين", cnv.makeThreeDigitNum(895))
+	require.Equal(t, "ثمان مئة واثنتي عشرة", cnv.makeThreeDigitNum(812))
+	require.Equal(t, "ثمان مئة واحدى عشرة", cnv.makeThreeDigitNum(811))
 	cnv.Opt.Miah = true
-	require.Equal(t, "مائة وثلاث وأربعين", cnv.MakeThreeDigitNum(143))
-	require.Equal(t, "مائة", cnv.MakeThreeDigitNum(100))
-	require.Equal(t, "مائتين", cnv.MakeThreeDigitNum(200))
-	require.Equal(t, "ثلاث مائة وأربع", cnv.MakeThreeDigitNum(304))
-	require.Equal(t, "خمس مائة", cnv.MakeThreeDigitNum(500))
-	require.Equal(t, "مائتين وست وخمسين", cnv.MakeThreeDigitNum(256))
-	require.Equal(t, "ثمان مائة وخمس وتسعين", cnv.MakeThreeDigitNum(895))
-	require.Equal(t, "ثمان مائة واثنتي عشرة", cnv.MakeThreeDigitNum(812))
-	require.Equal(t, "ثمان مائة واحدى عشرة", cnv.MakeThreeDigitNum(811))
+	require.Equal(t, "مائة وثلاث وأربعين", cnv.makeThreeDigitNum(143))
+	require.Equal(t, "مائة", cnv.makeThreeDigitNum(100))
+	require.Equal(t, "مائتين", cnv.makeThreeDigitNum(200))
+	require.Equal(t, "ثلاث مائة وأربع", cnv.makeThreeDigitNum(304))
+	require.Equal(t, "خمس مائة", cnv.makeThreeDigitNum(500))
+	require.Equal(t, "مائتين وست وخمسين", cnv.makeThreeDigitNum(256))
+	require.Equal(t, "ثمان مائة وخمس وتسعين", cnv.makeThreeDigitNum(895))
+	require.Equal(t, "ثمان مائة واثنتي عشرة", cnv.makeThreeDigitNum(812))
+	require.Equal(t, "ثمان مائة واحدى عشرة", cnv.makeThreeDigitNum(811))
 
 }
 
@@ -220,10 +220,10 @@ func TestReturnBase(t *testing.T) {
 		Opt: opt,
 		Num: 1,
 	}
-	require.Equal(t, "مئة وثلاثة وأربعون", cnv.ReturnBase(143))
-	require.Equal(t, "واحد وخمسون", cnv.ReturnBase(51))
-	require.Equal(t, "ثلاثة", cnv.ReturnBase(3))
-	require.Equal(t, " ", cnv.ReturnBase(1234))
+	require.Equal(t, "مئة وثلاثة وأربعون", cnv.returnBase(143))
+	require.Equal(t, "واحد وخمسون", cnv.returnBase(51))
+	require.Equal(t, "ثلاثة", cnv.returnBase(3))
+	require.Equal(t, " ", cnv.returnBase(1234))
 
 }
 
