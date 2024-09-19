@@ -182,6 +182,7 @@ func (cnv *NumberConverter) MakeNumber() string {
 	if cnv.Num == 0 {
 		return numbers[0][0]
 	}
+
 	var numberStr []string
 	for {
 		if countsDigits(cnv.Num) >= 3 {
@@ -200,19 +201,29 @@ func (cnv *NumberConverter) MakeNumber() string {
 	var final string
 	for i := 0; i < len(numberStr); i++ {
 		if numberStr[i] != " " && manazl[i] != " " {
+			currentManzlah := manazl[i]
+			currentPluralManzlah := manazl[i]
+			if manazl[i] == "مليار" && cnv.Opt.Billions {
+				currentManzlah = "بليون"
+				currentPluralManzlah = "بليونات"
+			}
 			if numberStr[i] == numbers[0][1] || numberStr[i] == numbers[1][1] {
-				numberStr[i] = manazl[i]
+				// مليار , مليون
+				numberStr[i] = currentManzlah
 			} else if numberStr[i] == "اثنان" || numberStr[i] == "اثنين" || numberStr[i] == "اثنتين" || numberStr[i] == "اثنتان" {
-				numberStr[i] = manazl[i] + "ان"
+				// ملياران , مليونان في حالة الرفع أو  مليونين في حالة النصب والجر
+				numberStr[i] = currentManzlah + "ان"
 				if cnv.Opt.AG {
-					numberStr[i] = manazl[i] + "ين"
+					numberStr[i] = currentManzlah + "ين"
 				}
 			} else if searchInNumbers(numberStr[i]) {
+				// من 3 الى 9 يجب ان تكون المنزلة جمع اي ثلاثة الاف
 				numberStr[i] += string(" ")
-				numberStr[i] += manazlInPlural[i]
+				numberStr[i] += currentPluralManzlah
 			} else {
+				// default
 				numberStr[i] += string(" ")
-				numberStr[i] += manazl[i]
+				numberStr[i] += currentManzlah
 			}
 		}
 	}
