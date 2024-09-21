@@ -2,6 +2,7 @@ package tafqit
 
 import (
 	"strings"
+	"unicode"
 )
 
 var manazl = []string{" ", "ألف", "مليون", "مليار", "تريليون", "كوادريليون"}
@@ -227,7 +228,7 @@ func (cnv *NumberConverter) MakeNumber() string {
 	for i := 0; i < len(numberStr); i++ {
 		if numberStr[i] != " " && manazl[i] != " " {
 			currentManzlah := manazl[i]
-			currentPluralManzlah := manazl[i]
+			currentPluralManzlah := manazlInPlural[i]
 			if manazl[i] == "مليار" && cnv.Opt.Billions {
 				currentManzlah = "بليون"
 				currentPluralManzlah = "بليونات"
@@ -262,9 +263,25 @@ func (cnv *NumberConverter) MakeNumber() string {
 		final += " "
 		final += numberStr[i]
 	}
+	return strings.TrimSpace(removeConsecutiveSpaces(final))
 
-	return strings.TrimSpace(final)
 }
 
-// git tag -l to list all tags
-// git tag -d tagName to delete tag
+func removeConsecutiveSpaces(input string) string {
+	var result strings.Builder
+	spaceFound := false
+
+	for _, char := range input {
+		if unicode.IsSpace(char) {
+			if !spaceFound {
+				result.WriteRune(' ')
+				spaceFound = true
+			}
+		} else {
+			result.WriteRune(char)
+			spaceFound = false
+		}
+	}
+
+	return result.String()
+}

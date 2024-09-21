@@ -253,7 +253,8 @@ func TestMakeNumber(t *testing.T) {
 	require.Equal(t, "أربعة بليونات وتسعة مئة وثمانية وسبعين مليون وستة مئة وأربعة وخمسين ألف ومئة وعشرين", cnv.MakeNumber())
 	cnv.Num = 2978654120
 	require.Equal(t, "بليونين وتسعة مئة وثمانية وسبعين مليون وستة مئة وأربعة وخمسين ألف ومئة وعشرين", cnv.MakeNumber())
-
+	cnv.Num = -5
+	require.Equal(t, "سالب خمسة", cnv.MakeNumber())
 }
 
 func TestHandleTwoHandred(t *testing.T) {
