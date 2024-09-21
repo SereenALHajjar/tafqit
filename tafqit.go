@@ -204,8 +204,12 @@ func (cnv *NumberConverter) MakeNumber() string {
 	if cnv.Num == 0 {
 		return numbers[0][0]
 	}
-
+	var final string
 	var numberStr []string
+	if cnv.Num < 0 {
+		final = "سالب "
+		cnv.Num *= -1
+	}
 	for {
 		if countsDigits(cnv.Num) >= 3 {
 			lastThreeDigitNumber := extractLastNDigit(cnv.Num, 3)
@@ -220,7 +224,6 @@ func (cnv *NumberConverter) MakeNumber() string {
 			break
 		}
 	}
-	var final string
 	for i := 0; i < len(numberStr); i++ {
 		if numberStr[i] != " " && manazl[i] != " " {
 			currentManzlah := manazl[i]
