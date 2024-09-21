@@ -262,3 +262,6 @@ func (cnv *NumberConverter) MakeNumber() string {
 
 	return strings.TrimSpace(final)
 }
+
+// git tag -l to list all tags
+// git tag -d tagName to delete tag
