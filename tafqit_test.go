@@ -250,13 +250,15 @@ func TestMakeNumber(t *testing.T) {
 	require.Equal(t, "مليونين", cnv.MakeNumber())
 	cnv.Num = 4978654120
 	cnv.Opt.Billions = true
-	require.Equal(t, "أربعة بليونات وتسعة مئة وثمانية وسبعين مليون وستة مئة وأربعة وخمسين ألف ومئة وعشرين", cnv.MakeNumber())
+	require.Equal(t, "أربعة بلايين وتسعة مئة وثمانية وسبعين مليون وستة مئة وأربعة وخمسين ألف ومئة وعشرين", cnv.MakeNumber())
 	cnv.Num = 2978654120
 	require.Equal(t, "بليونين وتسعة مئة وثمانية وسبعين مليون وستة مئة وأربعة وخمسين ألف ومئة وعشرين", cnv.MakeNumber())
 	cnv.Num = -5
 	require.Equal(t, "سالب خمسة", cnv.MakeNumber())
-}
+	cnv.Num = 2000033
+	require.Equal(t, "مليونين وثلاثة وثلاثين", cnv.MakeNumber())
 
+}
 func TestHandleTwoHandred(t *testing.T) {
 	require.Equal(t, "مائتين", handleTwoHaundred(true, true))
 	require.Equal(t, "مئتين", handleTwoHaundred(true, false))

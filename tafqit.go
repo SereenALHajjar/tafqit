@@ -206,9 +206,10 @@ func (cnv *NumberConverter) MakeNumber() string {
 		return numbers[0][0]
 	}
 	var final string
+	negative := false
 	var numberStr []string
 	if cnv.Num < 0 {
-		final = "سالب "
+		negative = true
 		cnv.Num *= -1
 	}
 	for {
@@ -231,7 +232,7 @@ func (cnv *NumberConverter) MakeNumber() string {
 			currentPluralManzlah := manazlInPlural[i]
 			if manazl[i] == "مليار" && cnv.Opt.Billions {
 				currentManzlah = "بليون"
-				currentPluralManzlah = "بليونات"
+				currentPluralManzlah = "بلايين"
 			}
 			if numberStr[i] == numbers[0][1] || numberStr[i] == numbers[1][1] {
 				// مليار , مليون
@@ -257,11 +258,14 @@ func (cnv *NumberConverter) MakeNumber() string {
 		if numberStr[i] == " " {
 			continue
 		}
-		if i+1 < len(numberStr) && numberStr[i+1] != " " {
+		if len(final) != 0 {
 			numberStr[i] = "و" + numberStr[i]
 		}
 		final += " "
 		final += numberStr[i]
+	}
+	if negative {
+		final = "سالب " + final
 	}
 	return strings.TrimSpace(removeConsecutiveSpaces(final))
 
